@@ -73,6 +73,15 @@ domain_match_goog_fb = len(goog_fb_df.query('google_domain == fb_domain'))
 country_match_goog_fb = len(goog_fb_df.query('google_country_name == fb_country_name'))
 country_code_match_goog_fb = len(goog_fb_df.query('google_country_code == fb_country_code'))
 
+
+goog_fb_web_df['fb_phone'] = goog_fb_web_df['fb_phone'].str[1:]
+goog_fb_web_df['google_phone'] = goog_fb_web_df['google_phone'].str[1:]
+
+phone_match_goog_fb_web = len(goog_fb_web_df.query('google_phone == fb_phone & fb_phone == web_phone'))
+domain_match_goog_fb_web = len(goog_fb_web_df.query('google_domain == fb_domain & fb_domain == web_root_domain'))
+country_code_match_goog_fb_web = len(goog_fb_web_df.query('google_country_code == fb_country_code & fb_country_code == web_tld'))
+
+
 # Get the table headers
 go_headers = google_df.columns
 fb_headers = facebook_df.columns
@@ -85,3 +94,24 @@ print(domain_match_goog_fb)
 print(country_match_goog_fb)
 print(country_code_match_goog_fb)
 
+print(country_code_match_goog_fb_web)
+print(phone_match_goog_fb_web)
+print(domain_match_goog_fb_web)
+
+goog_fb_clean = goog_fb_df.query('google_phone == fb_phone & google_country_code == fb_country_code')
+
+goog_fb_clean.columns = goog_fb_clean.columns.str.replace('google_phone', 'phone')
+goog_fb_clean.columns = goog_fb_clean.columns.str.replace('google_name', 'name')
+goog_fb_clean.columns = goog_fb_clean.columns.str.replace('google_domain', 'domain')
+goog_fb_clean.columns = goog_fb_clean.columns.str.replace('google_country_code', 'country_code')
+
+goog_fb_clean.to_csv('results/google_facebook.csv', columns=['name', 'country_code', 'phone', 'domain'], index=False)
+
+goog_fb_web_clean = goog_fb_web_df.query('google_phone == fb_phone & google_country_code == fb_country_code & fb_phone == web_phone & fb_country_code == web_tld')
+
+goog_fb_web_clean.columns = goog_fb_web_clean.columns.str.replace('google_phone', 'phone')
+goog_fb_web_clean.columns = goog_fb_web_clean.columns.str.replace('google_name', 'name')
+goog_fb_web_clean.columns = goog_fb_web_clean.columns.str.replace('google_domain', 'domain')
+goog_fb_web_clean.columns = goog_fb_web_clean.columns.str.replace('google_country_code', 'country_code')
+
+goog_fb_web_clean.to_csv('results/google_facebook_web.csv', columns=['name', 'country_code', 'phone', 'domain'], index=False)

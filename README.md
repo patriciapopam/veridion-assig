@@ -1,4 +1,6 @@
-###
+## ASSIGNMENT #3
+
+For three given datasets (facebook, google and website), the data has been aggregated and analysed.
 
 ### 1. Pre-processing
 
@@ -26,10 +28,13 @@ For matching the names a pattern matching algorithm [3] would be the way to go. 
 
 All name duplicates have been dropped for simplicity. An inner join on the facebook and google datasets provides a dataset of 34216 companies, which indicates that around half of the companies on the facebook list have a corespondent on the google one. With suffix-removal and pattern-matching, this number is expected to increase significantly.
 
-An inner join on all three dataset provies a list of 3368 companies, representing less than 5% of the companies on the list. 
+Analysing the data for this merged dataset, we have the following results: 55% of the companies in the fb-google merged set have a phone number match, while domain name matched in 98% of the cases, making it the second-most reliable piece of information after the company name. Country name had a match of 60%, while country code had a 78% match, indicating that further data clean-up is needed in the country name field. The large discrepancies in matching might also be determined by missing data.
 
-4439857
-6853
+An inner join on all three dataset provies a list of 3368 companies, representing less than 5% of the companies on the list. Between all three datasets, country code match was 38%, phone number match was 51%, and domain name was once again the most reliable, at 99.1%.
+
+## Conclusions
+
+The .csv aggregating all data only contains 807 companies, and this result could be greatly improved by employing more data clean-up, better pattern matching and treating duplicate cases instead of dropping them.
 
 ## References:
 
